@@ -18,11 +18,25 @@
     <script src="../js/react-dom.development.js"></script>
     <!-- babel,用于将jsx转为js -->
     <script src="../js/babel.min.js"></script>
+    <!-- prop-type,用于对组件标签属性进行限制 -->
+    <script src="../js/prop-types.js"></script>
 
     <!-- 一定要写babel -->
     <script type="text/babel">
       // 创建组件
       class Person extends React.Component {
+        // 对标签属性进行类型、必要性的限制
+        static propTypes = {
+          name: PropTypes.string.isRequired,
+          sex: PropTypes.string,
+          age: PropTypes.number,
+          speak: PropTypes.func,
+        };
+        // 指定默认标签属性值
+        static defaultProps = {
+          sex: "无",
+          age: 18,
+        };
         render() {
           const { name, age, sex } = this.props;
           return (
@@ -34,9 +48,10 @@
           );
         }
       }
+
       // 渲染组件到页面
       ReactDOM.render(
-        <Person name="鸣人" age="20" sex="男" />,
+        <Person name="鸣人" age={20} sex="男" speak={speak} />,
         document.getElementById("test")
       );
       ReactDOM.render(
@@ -44,6 +59,9 @@
         document.getElementById("test2")
       );
       const p = { name: "卡卡西", age: 30, sex: "男" };
+      function speak() {
+        console.log("说话");
+      }
       ReactDOM.render(<Person {...p} />, document.getElementById("test3"));
     </script>
   </body>
