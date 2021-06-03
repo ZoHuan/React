@@ -16,18 +16,38 @@ export default class App extends Component {
       { id: '004', name: '玩游戏', done: false },
     ]
   }
+
+  // 用于添加一个todo,接收的参数是todo对象
   addTodo = (todoObj) => {
+    // 获取状态中的todos
     const { todos } = this.state
+    // 追加一个todo
     const newTodos = [todoObj, ...todos]
+    // 更新状态
     this.setState({ todos: newTodos })
   }
 
+  // 用于更新一个todo对象
   updateTodo = (id, done) => {
+    // 获取状态中的todos
     const { todos } = this.state
+    // 匹配处理数据
     const newTodos = todos.map((todoObj) => {
       if (todoObj.id === id) return { ...todoObj, done: done }
       else return todoObj
     })
+    this.setState({ todos: newTodos })
+  }
+
+  // 用于删除一个todo对象
+  deleteTodo = (id) => {
+    // 获取状态中的todos
+    const { todos } = this.state
+    // 删除指定id的todo对象
+    const newTodos = todos.filter((todoObj) => {
+      return todoObj.id !== id
+    })
+    // 更新状态
     this.setState({ todos: newTodos })
   }
 
@@ -37,7 +57,7 @@ export default class App extends Component {
       <div className="todo-container">
         <div className="todo-wrap">
           <Header addTodo={this.addTodo} />
-          <List todos={todos} updateTodo={this.updateTodo} />
+          <List todos={todos} updateTodo={this.updateTodo} deleteTodo={this.deleteTodo} />
           <Footer />
         </div>
       </div>
