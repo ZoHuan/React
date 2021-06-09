@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import PubSub from "pubsub-js";
 import axios from "axios";
 
 export default class Search extends Component {
@@ -8,20 +7,23 @@ export default class Search extends Component {
     const {
       keyWordElement: { value: keyWord },
     } = this;
-    // 发送请求前通知List更新状态
-    PubSub.publish("news", { isFirst: false, isLoading: true });
+    // 发送请求前通知App更新状态
+    this.props.updateAppState({ isFirst: false, isLoading: true });
     // 发送网络请求
     axios.get(`/api1/search/users?q=${keyWord}`).then(
       (response) => {
-        // 请求成功后通知List更新状态
-        PubSub.publish("news", {
+        // 请求成功后通知App更新状态
+        this.props.updateAppState({
           isLoading: false,
           users: response.data.items,
         });
       },
       (error) => {
-        // 请求失败后通知List更新状态
-        PubSub.publish("news", { isLoading: false, err: error.message });
+        // 请求失败后通知App更新状态
+        this.props.updateAppState({
+          isLoading: false,
+          err: error.message,
+        });
       }
     );
   };
