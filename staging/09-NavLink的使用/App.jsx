@@ -3,7 +3,6 @@ import { NavLink, BrowserRouter, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Header from "./components/Header";
-import MyNavlink from "./components/MyNavlink";
 
 export default class App extends Component {
   render() {
@@ -40,7 +39,6 @@ export default class App extends Component {
               >
                 Home
               </NavLink>
-              <MyNavlink />
             </div>
           </div>
           <div className="col-xs-6">
