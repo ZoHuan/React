@@ -11,6 +11,40 @@ export default class Message extends Component {
     ],
   };
 
+  replaceShow = (id, title) => {
+    // replace跳转+携带params参数
+    // this.props.history.replace(`/home/message/detail/${id}/${title}`);
+
+    // replace跳转+携带search参数
+    // this.props.history.replace(`/home/message/detail?id=${id}&title${title}`);
+
+    // replace跳转+携带state参数
+    this.props.history.replace(`/home/message/detail`, { id, title });
+  };
+
+  pushShow = (id, title) => {
+    // push跳转+携带params参数
+    // this.props.history.push(`/home/message/detail/${id}/${title}`);
+
+    // push跳转+携带search参数
+    // this.props.history.push(`/home/message/detail?id=${id}&title${title}`);
+
+    // push跳转+携带state参数
+    this.props.history.push(`/home/message/detail`, { id, title });
+  };
+
+  back = () => {
+    this.props.history.goBack();
+  };
+
+  forward = () => {
+    this.props.history.goForward();
+  };
+
+  go = () => {
+    this.props.history.go(2);
+  };
+
   render() {
     const { messageArr } = this.state;
     return (
@@ -23,17 +57,14 @@ export default class Message extends Component {
                 {/* <Link to={`/home/message/detail/${msgObj.id}/${msgObj.title}`}>
                   {msgObj.title}
                 </Link> */}
-
                 {/* 向路由组件传递search参数 */}
                 {/* <Link
                   to={`/home/message/detail/?id=${msgObj.id}&title=${msgObj.title}`}
                 >
                   {msgObj.title}
                 </Link> */}
-
                 {/* 向路由组件传递state参数 */}
                 <Link
-                  replace={true}
                   to={{
                     pathname: "/home/message/detail",
                     state: { id: msgObj.id, title: msgObj.title },
@@ -41,6 +72,16 @@ export default class Message extends Component {
                 >
                   {msgObj.title}
                 </Link>
+                &nbsp;
+                <button onClick={() => this.pushShow(msgObj.id, msgObj.title)}>
+                  push查看
+                </button>
+                &nbsp;
+                <button
+                  onClick={() => this.replaceShow(msgObj.id, msgObj.title)}
+                >
+                  replace查看
+                </button>
               </li>
             );
           })}
